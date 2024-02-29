@@ -1,0 +1,66 @@
+
+### POST
+POST http://localhost:4000/user-login-api/register
+Accept: application/json
+
+{
+    "user_name" : "BigG",
+    "password" : "bigfatcat_666",
+    "role_id" : 1,
+    "email" : "BigG@gmail.com"
+}
+
+### POST
+POST http://localhost:4000/user-login-api/register
+Accept: application/json
+
+{
+    "user_name" : "ThiccG",
+    "password" : "bigfatcat_666",
+    "role_id" : 2,
+    "email" : "ThiccG@gmail.com"
+}
+
+### login thicc g
+POST http://localhost:4000/user-login-api/login
+Accept: application/json
+
+{
+    "email" : "ThiccG@gmail.com",
+    "password" : "bigfatcat_666"
+}
+
+### login big g
+POST http://localhost:4000/user-login-api/login
+Accept: application/json
+
+{
+    "email" : "BigG@gmail.com",
+    "password" : "bigfatcat_666"
+}
+
+### admin only login big g
+POST http://localhost:4000/user-login-api/admin-only-login
+Accept: application/json
+
+{
+    "email" : "BigG@gmail.com",
+    "password" : "bigfatcat_666"
+}
+
+### admin only login thicc g
+POST http://localhost:4000/user-login-api/admin-only-login
+Accept: application/json
+
+{
+    "email" : "ThiccG@gmail.com",
+    "password" : "bigfatcat_666"
+}
+
+### get user from cookie
+GET http://localhost:4000/user-login-api/getcookie
+Accept: application/json
+
+### logout
+GET http://localhost:4000/user-login-api/logout
+Accept: application/json
