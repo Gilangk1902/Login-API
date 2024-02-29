@@ -113,10 +113,10 @@ func (user_controller *UserController) GetUserFromCookie(writer http.ResponseWri
 	claims := JWT.Claims{}
 	token, err := jwt.ParseWithClaims(cookie.Value, &claims,
 		func(t *jwt.Token) (interface{}, error) {
-			return Service.Jwtkey, nil
+			return JWT.Jwtkey, nil
 		})
 	if err != nil {
-		Helper.WriteUnAuthorized(writer)
+		Helper.WriteBadRequest(writer)
 		return
 	}
 	if !token.Valid {

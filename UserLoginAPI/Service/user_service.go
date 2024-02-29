@@ -7,13 +7,9 @@ import (
 	"UserLoginAPI/Model/Web"
 	"UserLoginAPI/Repository"
 	"errors"
-	"time"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/golang-jwt/jwt"
 )
-
-var Jwtkey = []byte("secret_key")
 
 type UserService struct {
 	User_repository Repository.IUserRepository
@@ -75,27 +71,11 @@ func (user_service *UserService) Login(request Web.LoginRequest) (Web.LoginRespo
 	user_response := user_service.User_repository.GetUserFromEmail(request.Email)
 
 	if Helper.CheckPasswordHash(request.Password, user_response.Password) {
-		expires := time.Now().Add(time.Minute * 1)
-		claims := JWT.Claims{
-			User_name: user_response.User_name,
-			Email:     user_response.Email,
-			Role:      user_service.User_repository.GetRoleById(user_response.Role_id).Name,
-			StandardClaims: jwt.StandardClaims{
-				ExpiresAt: expires.Unix(),
-			},
-		}
-
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		token_string, err := token.SignedString(Jwtkey)
-		if err != nil {
-			panic(err)
-		}
-
 		return Web.LoginResponse{
 			User_name: user_response.User_name,
 			Email:     user_response.Email,
 			Role:      user_service.User_repository.GetRoleById(user_response.Role_id),
-		}, token_string
+		}, JWT.GenerateToken(user_response, user_service.User_repository)
 	}
 	return Web.LoginResponse{}, Helper.NO_TOKEN
 }
